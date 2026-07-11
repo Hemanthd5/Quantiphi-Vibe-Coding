@@ -220,57 +220,86 @@ export default function ProductCatalog() {
                 </button>
               </div>
 
-              <div className={`rounded-[24px] border transition-all duration-300 p-4 ${
+              <div className={`rounded-[24px] border transition-all duration-300 p-4 shadow-[inset_0_2px_12px] ${
                 theme === 'dark'
-                  ? 'border-slate-800/80 bg-slate-950/70'
-                  : 'border-slate-300/50 bg-slate-100/50'
+                  ? 'border-slate-800/80 bg-slate-950/70 shadow-[inset_0_2px_12px_rgba(0,0,0,0.3)]'
+                  : 'border-slate-300/50 bg-slate-100/50 shadow-[inset_0_2px_12px_rgba(0,0,0,0.04)]'
               }`}>
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className={`text-sm font-semibold uppercase tracking-[0.2em] ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>Category</h3>
-                  <span className={`text-xs ${
-                    theme === 'dark' ? 'text-slate-500' : 'text-slate-500'
-                  }`}>{categories.length ? `${categories.length} selected` : 'Any'}</span>
+                  }`}>📦 Category</h3>
+                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
+                    categories.length > 0
+                      ? theme === 'dark'
+                        ? 'bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-500/30'
+                        : 'bg-cyan-600/20 text-cyan-700 ring-1 ring-cyan-600/30'
+                      : theme === 'dark'
+                        ? 'bg-slate-800/50 text-slate-500'
+                        : 'bg-slate-200/50 text-slate-500'
+                  }`}>{categories.length ? `${categories.length} active` : 'Any'}</span>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {CATEGORY_OPTIONS.map((category) => (
-                    <label key={category} className={`flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-sm transition-all duration-300 ${
-                      theme === 'dark'
-                        ? 'text-slate-300 hover:border-cyan-500/30 hover:bg-slate-800/70'
-                        : 'text-slate-700 hover:border-cyan-600/30 hover:bg-slate-200/50'
+                    <label key={category} className={`group flex cursor-pointer items-center gap-3 rounded-xl border px-3.5 py-2.5 text-sm font-medium transition-all duration-300 ${
+                      categories.includes(category)
+                        ? theme === 'dark'
+                          ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-200 shadow-[0_4px_16px_rgba(34,211,238,0.15)]'
+                          : 'border-cyan-600/40 bg-cyan-600/10 text-cyan-800 shadow-[0_4px_16px_rgba(34,211,238,0.12)]'
+                        : theme === 'dark'
+                          ? 'border-transparent text-slate-400 hover:border-slate-700/50 hover:bg-slate-800/60 hover:text-slate-200'
+                          : 'border-transparent text-slate-600 hover:border-slate-300/50 hover:bg-slate-200/40 hover:text-slate-800'
                     }`}>
                       <input
                         type="checkbox"
                         checked={categories.includes(category)}
                         onChange={() => toggleCategory(category)}
                         aria-label={`Filter by ${category}`}
-                        className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-cyan-500 focus:ring-cyan-500"
+                        className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-cyan-500 transition-all focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950"
                       />
-                      <span>{category}</span>
+                      <span className="flex-1">{category}</span>
+                      {categories.includes(category) && (
+                        <span className="text-[10px]">✓</span>
+                      )}
                     </label>
                   ))}
                 </div>
               </div>
 
-              <div className={`rounded-[24px] border transition-all duration-300 p-4 ${
+              <div className={`rounded-[24px] border transition-all duration-300 p-4 shadow-[inset_0_2px_12px] ${
                 theme === 'dark'
-                  ? 'border-slate-800/80 bg-slate-950/70'
-                  : 'border-slate-300/50 bg-slate-100/50'
+                  ? 'border-slate-800/80 bg-slate-950/70 shadow-[inset_0_2px_12px_rgba(0,0,0,0.3)]'
+                  : 'border-slate-300/50 bg-slate-100/50 shadow-[inset_0_2px_12px_rgba(0,0,0,0.04)]'
               }`}>
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className={`text-sm font-semibold uppercase tracking-[0.2em] ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>Price range</h3>
-                  <span className={`text-sm ${
-                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                  }`}>💰 Price range</h3>
+                  <span className={`rounded-full px-3 py-1 text-xs font-bold transition-all duration-300 ${
+                    (minPrice > DEFAULT_MIN_PRICE || maxPrice < DEFAULT_MAX_PRICE)
+                      ? theme === 'dark'
+                        ? 'bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-500/30'
+                        : 'bg-cyan-600/20 text-cyan-700 ring-1 ring-cyan-600/30'
+                      : theme === 'dark'
+                        ? 'bg-slate-800/50 text-slate-400'
+                        : 'bg-slate-200/50 text-slate-600'
                   }`}>${minPrice} - ${maxPrice}</span>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <div>
-                    <label className={`mb-1 block text-xs font-medium uppercase tracking-[0.2em] ${
-                      theme === 'dark' ? 'text-slate-500' : 'text-slate-600'
-                    }`}>Minimum</label>
+                    <div className="mb-2 flex items-center justify-between">
+                      <label className={`text-xs font-medium uppercase tracking-[0.2em] ${
+                        theme === 'dark' ? 'text-slate-500' : 'text-slate-600'
+                      }`}>Min: ${minPrice}</label>
+                      <div className={`h-1 w-16 rounded-full ${
+                        theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300'
+                      }`}>
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-cyan-400 transition-all duration-300"
+                          style={{ width: `${(minPrice / 250) * 100}%` }}
+                        />
+                      </div>
+                    </div>
                     <input
                       type="range"
                       min="0"
@@ -279,13 +308,23 @@ export default function ProductCatalog() {
                       value={minPrice}
                       onChange={(event) => handleMinPriceChange(event.target.value)}
                       aria-label="Minimum price filter"
-                      className="w-full accent-cyan-500"
+                      className="w-full accent-cyan-500 transition-all"
                     />
                   </div>
                   <div>
-                    <label className={`mb-1 block text-xs font-medium uppercase tracking-[0.2em] ${
-                      theme === 'dark' ? 'text-slate-500' : 'text-slate-600'
-                    }`}>Maximum</label>
+                    <div className="mb-2 flex items-center justify-between">
+                      <label className={`text-xs font-medium uppercase tracking-[0.2em] ${
+                        theme === 'dark' ? 'text-slate-500' : 'text-slate-600'
+                      }`}>Max: ${maxPrice}</label>
+                      <div className={`h-1 w-16 rounded-full ${
+                        theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300'
+                      }`}>
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-cyan-500 transition-all duration-300"
+                          style={{ width: `${(maxPrice / 250) * 100}%` }}
+                        />
+                      </div>
+                    </div>
                     <input
                       type="range"
                       min="0"
@@ -294,31 +333,41 @@ export default function ProductCatalog() {
                       value={maxPrice}
                       onChange={(event) => handleMaxPriceChange(event.target.value)}
                       aria-label="Maximum price filter"
-                      className="w-full accent-cyan-500"
+                      className="w-full accent-cyan-500 transition-all"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className={`rounded-[24px] border transition-all duration-300 p-4 ${
+              <div className={`rounded-[24px] border transition-all duration-300 p-4 shadow-[inset_0_2px_12px] ${
                 theme === 'dark'
-                  ? 'border-slate-800/80 bg-slate-950/70'
-                  : 'border-slate-300/50 bg-slate-100/50'
+                  ? 'border-slate-800/80 bg-slate-950/70 shadow-[inset_0_2px_12px_rgba(0,0,0,0.3)]'
+                  : 'border-slate-300/50 bg-slate-100/50 shadow-[inset_0_2px_12px_rgba(0,0,0,0.04)]'
               }`}>
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className={`text-sm font-semibold uppercase tracking-[0.2em] ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>Rating</h3>
-                  <span className={`text-sm ${
-                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                  }`}>⭐ Rating</h3>
+                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] transition-all duration-300 ${
+                    minRating > 0
+                      ? theme === 'dark'
+                        ? 'bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-500/30'
+                        : 'bg-cyan-600/20 text-cyan-700 ring-1 ring-cyan-600/30'
+                      : theme === 'dark'
+                        ? 'bg-slate-800/50 text-slate-500'
+                        : 'bg-slate-200/50 text-slate-500'
                   }`}>{minRating > 0 ? `${minRating}+` : 'Any'}</span>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {[0, 3, 4, 4.5, 5].map((value) => (
-                    <label key={value} className={`flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-sm transition-all duration-300 ${
-                      theme === 'dark'
-                        ? 'text-slate-300 hover:border-cyan-500/30 hover:bg-slate-800/70'
-                        : 'text-slate-700 hover:border-cyan-600/30 hover:bg-slate-200/50'
+                    <label key={value} className={`group flex cursor-pointer items-center gap-3 rounded-xl border px-3.5 py-2.5 text-sm font-medium transition-all duration-300 ${
+                      minRating === value
+                        ? theme === 'dark'
+                          ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-200 shadow-[0_4px_16px_rgba(34,211,238,0.15)]'
+                          : 'border-cyan-600/40 bg-cyan-600/10 text-cyan-800 shadow-[0_4px_16px_rgba(34,211,238,0.12)]'
+                        : theme === 'dark'
+                          ? 'border-transparent text-slate-400 hover:border-slate-700/50 hover:bg-slate-800/60 hover:text-slate-200'
+                          : 'border-transparent text-slate-600 hover:border-slate-300/50 hover:bg-slate-200/40 hover:text-slate-800'
                     }`}>
                       <input
                         type="radio"
@@ -327,9 +376,12 @@ export default function ProductCatalog() {
                         checked={minRating === value}
                         onChange={() => setMinRating(value)}
                         aria-label={`Filter by ${value === 0 ? 'any rating' : `${value}+ stars`}`}
-                        className="h-4 w-4 border-slate-600 bg-slate-900 text-cyan-500 focus:ring-cyan-500"
+                        className="h-4 w-4 border-slate-600 bg-slate-900 text-cyan-500 transition-all focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950"
                       />
-                      <span>{value === 0 ? 'Any rating' : `${value}+ stars`}</span>
+                      <span className="flex-1">{value === 0 ? 'Any rating' : `${value}+ stars`}</span>
+                      {minRating === value && value > 0 && (
+                        <span className="text-xs">{'★'.repeat(Math.floor(value))}{value % 1 !== 0 ? '☆' : ''}</span>
+                      )}
                     </label>
                   ))}
                 </div>
